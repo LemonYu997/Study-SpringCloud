@@ -1,0 +1,28 @@
+spring:
+  # 启动时如果无法读取datasource，可以手动加上
+  cloud:
+    config:
+      # 要与仓库中的配置文件的application保持一致
+      name: user
+      # 要与仓库中的配置文件的profile保持一致
+      profile: dev
+      # 要与仓库中的配置文件所属的版本（分支）一致
+      label: master
+      discovery:
+        # 使用配置中心
+        enabled: true
+        # 注册在eureka中的服务名
+        service-id: config-server
+#  #rabbitmq配置，如果都与默认值一致就不需要配置
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    username: guest
+#    password: guest
+
+#配置eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+

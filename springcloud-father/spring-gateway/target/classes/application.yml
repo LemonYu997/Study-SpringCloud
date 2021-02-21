@@ -1,0 +1,76 @@
+# 设置端口
+server:
+  port: 10010
+
+spring:
+  # 设置应用名称
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      # 配置跨域请求
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            # 这种写法或者下面的都可以，*表示全部
+            #allowedOrigins: *
+            allowedOrigins:
+              - "http://docs.spring.io"
+            allowedMehthods:
+              - GET
+      # 设置路由
+      routes:
+        # 路由id，可以任意
+        # -代表多个，这里配置一个节点
+        - id: user-service-route
+          # 代理的服务地址，lb表示从eureka中获取具体服务
+          # user-service为eureka注册服务名称（必须有才行）
+          uri: lb://user-service
+          # 路由断言：可以匹配映射路径
+          predicates:
+#            # 断言路径中是否包含/user
+#            - Path=/user/**
+#            # 断言全部路径
+#            - Path=/**
+            # 断言路径中是否包含/api/user
+            - Path=/api/user/**
+          filters:
+#            # 添加请求路径的前缀
+#            - PrefixPath=/user
+            # 去除请求路径的前缀
+            # 1表示过滤1个路径，2表示过滤两个路径，这里过滤一个即/api
+            - StripPrefix=1
+            # 请求路径中含有的参数
+            - MyParam=name
+      # 默认过滤器，会对所有路由都生效
+      default-filters:
+        - AddResponseHeader=X-Response-Foo, Bar
+        - AddResponseHeader=test, hello
+
+# 设置eureka服务注册中心
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+
+# 配置熔断超时策略
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000
+
+# 配置负载均衡
+ribbon:
+  # 连接超时
+  ConnectTimeout: 1000
+  # 访问超时
+  ReadTimeout: 2000
+  # 当前服务的重试次数
+  MaxAutoRetries: 0
+  # 最多重试次数为0
+  MaxAutoRetriesNextServer: 0

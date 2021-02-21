@@ -1,0 +1,40 @@
+# 端口号
+server:
+  # 根据VM中的参数设定，如果没有默认为9091
+  port: 9091
+
+# 数据源
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springcloud?luseSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+  # 设置应用名称
+  application:
+    name: user-service
+
+# 别名
+mybatis:
+  type-aliases-package: user.pojo
+
+# 配置Eureka
+eureka:
+  client:
+    service-url:
+      # 服务注册中心
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    # 注册时，更倾向使用ip地址，而不是host
+    # 更倾向使用ip地址
+    prefer-ip-address: true
+    # ip地址
+    ip-address: 127.0.0.1
+    # 配置服务续约
+    # 续约间隔，默认30秒，生产环境中不要修改
+    lease-renewal-interval-in-seconds: 30
+    # 服务失效间隔，默认90秒，生产环境中不要修改
+    lease-expiration-duration-in-seconds: 90
+
+test:
+  name: test

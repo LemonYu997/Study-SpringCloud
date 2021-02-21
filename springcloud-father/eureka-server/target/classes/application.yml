@@ -1,0 +1,27 @@
+# 设置端口
+server:
+  # 如果VM参数中存在port值则读取，不存在则使用10086
+  port: ${port:10086}
+
+# 设置应用名称
+spring:
+  application:
+    name: eureka-server
+
+eureka:
+  client:
+    service-url:
+      # eureka服务地址，如果是集群的话需要指定其他集群eureka地址
+      defaultZone: http://127.0.0.1:10086/eureka
+      # 集群化时打开下边的注释，注释上边
+      # defaultZone: ${defaultZone:http://127.0.0.1:10086/eureka}
+    # 不注册自己到eureka中，如果集群的话需要注册
+    # 需要集群的时候，默认为true，所以注释即可
+    register-with-eureka: false
+    # 不拉取服务，集群时，注释即可
+    fetch-registry: false
+  server:
+    # 服务失效剔除时间间隔，单位毫秒，默认60秒
+    eviction-interval-timer-in-ms: 60000
+    # 关闭自我保护默认，默认为打开true
+    enable-self-preservation: false

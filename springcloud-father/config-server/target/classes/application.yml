@@ -1,0 +1,32 @@
+# 端口号
+server:
+  port: 12000
+
+spring:
+  # 应用名称
+  application:
+    name: config-server
+  cloud:
+    # 远程服务中心
+    config:
+      server:
+        git:
+          uri: https://gitee.com/lemon997/spring-config.git
+#  #rabbitmq配置，如果都与默认值一致就不需要配置
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    username: guest
+#    password: guest
+# 注册eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        # 暴露触发消息总线的地址
+#        include: bus-refresh

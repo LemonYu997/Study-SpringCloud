@@ -1,0 +1,69 @@
+spring:
+  application:
+    # 设置应用名称
+    name: consumer-demo
+
+# 配置Eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+    # 获取服务地址列表间隔时间，默认为30秒
+    # fetch-remote-regions-registry: 10
+
+# 修改负载均衡规则
+#user-service:
+#  ribbon:
+#    # 改为随机，默认为轮询
+#    NFLoadBanlancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+# 配置hystrix
+#hystrix:
+#  command:
+#    default:
+#      # 配置熔断器策略
+#      circuitBreaker:
+#        # 触发熔断错误比例阈值，默认值50%
+#        errorThresholdPercentage: 50
+#        # 熔断后休眠时长，默认值5秒
+#        sleepWindowInMillseconds: 10000
+#        # 熔断触发最小请求次数，默认值20
+#        requestVolumeThreshold: 10
+#      execution:
+#        isolation:
+#          thread:
+#            # 熔断超时设置，默认为1秒
+#            timeoutInMilliseconds: 2000
+
+ribbon:
+  # 读取超时时长
+  ReadTimeout: 2000
+  # 建立连接的超时时长
+  ConnectTimeout: 1000
+  # 当前服务器的重试次数
+#  MaxAutoRetries: 0
+#  # 重试多少次服务
+#  MaxAutoRetriesNextServer: 0
+#  # 是否对所有的请求方式都重试
+#  OkToRetryOnAllOperations: false
+
+feign:
+  hystrix:
+    # 开启Feign的熔断功能
+    enabled: true
+  compression:
+    # 开启请求压缩
+    request:
+      enabled: true
+      # 设置压缩的数据类型
+      mime-types: text/html, application/xml, application/json
+      # 设置触发压缩的大小下限
+      min-request-size: 2048
+    # 开启响应压缩
+    response:
+      enabled: true
+
+# 配置日志级别
+logging:
+  level:
+    consumer: debug
